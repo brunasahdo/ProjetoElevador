@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "GAwCvSyeIg2WZlQk3TXevAHu3hr3KeAUvqxrwjKqPIFUHKEljp5AZelorv1VclQl0wUvVl46IPkby09lL4dyow==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Bruna Larissa\\source\\repos\\ProjetoElevador\\ProjetoElevador\\ProjetoElevador.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Bruna Larissa\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}
