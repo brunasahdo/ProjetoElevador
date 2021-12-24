@@ -9,8 +9,7 @@ namespace ProjetoElevador.Models
 {
     internal class Elevador:IElevador
 
-    {
-        //Propriedades da classe
+    {        //Propriedades da classe
        public int andarAtual { get; set; } //Pode assumir valores desde o térreo=0 até 
                                             //último andar
        public int qtdeAndares { get; set; } //desconsiderando o térreo
@@ -27,13 +26,11 @@ namespace ProjetoElevador.Models
       
         public void Inicializar(int capacidadeMax, int qtdeAndares)
         {
-            if (capacidadeMax > 0 & qtdeAndares > 0)
-            {
                 this.capacidadeMax = capacidadeMax;
                 this.qtdeAndares = qtdeAndares;
                 this.andarAtual = 0;   //térreo
                 this.lotacaoAtual = 0; //vazio, como pede a interface
-            }
+            
                           
         
         }
@@ -67,7 +64,7 @@ namespace ProjetoElevador.Models
         { 
             if (this.andarAtual<this.qtdeAndares)
             {
-                andarAtual = andarAtual++;
+                this.andarAtual++;
                 return true;
             } 
             else 
@@ -81,7 +78,7 @@ namespace ProjetoElevador.Models
         {
             if (this.andarAtual > 0)
             {
-                andarAtual = andarAtual--;
+                this.andarAtual--;
                 return true;
             }
             else
