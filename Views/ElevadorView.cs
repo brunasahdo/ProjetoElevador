@@ -40,32 +40,41 @@ namespace ProjetoElevador.Views
         }
 
 
-        public int ChamarElevador(int andarAtual)
-        {           
-            Console.WriteLine("             ---Chamar o elevador---           ");
+        public int ChamarElevador()
+        {
+           
+            Console.WriteLine("\n             ---Chamar o elevador---           ");
             Console.WriteLine("Em que andar o elevador foi chamado? ");
             int qualAndar= int.Parse(Console.ReadLine());
-            Console.WriteLine($"\nO elevador está a caminho. Saindo do andar{andarAtual}");
+            
             return qualAndar;         
        
         }
         public void Chamou(bool simOuNao) 
         {
-            if (!simOuNao) 
+            if (simOuNao)
             {
-                Console.WriteLine("Andar inválido"); 
+                Console.WriteLine($"\nO elevador está a caminho.");
             }
+            else Console.WriteLine("Andar inválido");
         }
 
        
         public void Visor(int andarAtual, string subindoOuDescendo)
         {
-            Console.WriteLine($"\nO andar atual é {andarAtual} - {subindoOuDescendo}");
+            string andarAtualstring = Convert.ToString(andarAtual);
+
+            if (andarAtualstring == "0")
+            {
+                andarAtualstring = "térreo";
+            }
+
+            Console.WriteLine($"\nAndar atual: {andarAtual} - {subindoOuDescendo}");
         }
 
         public string Menu()
         {
-            Console.WriteLine("Enter para prosseguir ou escolha 1 - Alguém chamou o elevador, 2 - Alguém quer sair");
+            Console.WriteLine("(Enter para prosseguir ou escolha 1 - Alguém chamou o elevador, 2 - Alguém quer sair)");
             return Console.ReadLine();
         }
 
@@ -76,9 +85,9 @@ namespace ProjetoElevador.Views
         }
 
 
-        public int Entrar(int andar)
+        public int Entrar()
         {
-            Console.WriteLine($"\nElevador parado no andar {andar}.Quantas pessoas desejam entrar? (0 - desistir de entrar)");
+            Console.WriteLine($"\nQuantas pessoas desejam entrar? (0 - desistir de entrar)");
 
             if (int.TryParse(Console.ReadLine(), out int result))
                 return result;
@@ -108,12 +117,13 @@ Tente entrar com uma quantidade que não ultrapasse o limite de {capacidadeMax} 
                 return result;
             else return -1;
         }
-        public void Saiu(bool simOuNao, int lotacaoAtual, int quantosSairam, int andarAtual)
+        public void Saiu(bool simOuNao, int lotacaoAtual, int quantosSairam)
         {
+           
             if (simOuNao)
-                Console.WriteLine($"\n{quantosSairam} pessoas saíram no andar {andarAtual}. Quantidade de pessoas no elevador: " + lotacaoAtual);
+                Console.WriteLine($"\n{quantosSairam} pessoas saíram. Quantidade de pessoas no elevador: " + lotacaoAtual);
             else
-                Console.WriteLine($"\nO elevador possui {lotacaoAtual} pessoas! Andar atual:{andarAtual}");
+                Console.WriteLine($"\nPedido inválido. Quantidade de pessoas no elevador:{lotacaoAtual}.");
         }
     }
 }

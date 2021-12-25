@@ -8,7 +8,6 @@ namespace ProjetoElevador
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
 
             ElevadorController elevadorController = new ElevadorController();
 

@@ -30,7 +30,7 @@ namespace ProjetoElevador.Controllers
                 //a Model inicializar o elevador. 
                 elevadorView.Inicializou(true);
                 elevadorView.Visor(elevador.andarAtual, "Parado");
-                this.showMenu("Parado");
+                this.ShowMenu("Parado");
             }
             else
             {
@@ -42,11 +42,11 @@ namespace ProjetoElevador.Controllers
             
         }
 
-      public void showMenu(string subindoOuDescendo="", bool showMenu = true)//segundo argumento é opcional e o seu default é "".
+      public void ShowMenu(string subindoOuDescendo="", bool showMenu = true)//segundo argumento é opcional e o seu default é "".
         {
             //elevadorView.Visor(elevador.andarAtual, subindoOuDescendo);
             //this.Menu(subindoOuDescendo);
-            while (showMenu) 
+            do
             {
                 if (subindoOuDescendo == "Parado" & showMenu)
                 {
@@ -56,30 +56,31 @@ namespace ProjetoElevador.Controllers
                 else
                     showMenu = this.Menu(subindoOuDescendo);
 
-            } 
+            } while (showMenu) ;
         }
 
         public bool Menu(string subindoOuDescendo)
         {
             string inputUsuario = elevadorView.Menu();
-            
+            elevadorView.Visor(elevador.andarAtual, subindoOuDescendo);
+
+
             bool continuar = false;
             switch (inputUsuario)
             {
-                case "":  break;
+                case "":;continuar = false; break;
                 case "1": this.ChamarElevador(); continuar = true; break;
-                case "2": this.Sair(); continuar = true; break;
-                default: continuar = true; break;
+                case "2": this.Sair(); continuar = false; break;
+                default: continuar = false; break;
             }
            
-           
-            elevadorView.Visor(elevador.andarAtual, subindoOuDescendo);
+
             return continuar;
         }
 
         public void ChamarElevador()
         {
-            int Andar = elevadorView.ChamarElevador(elevador.andarAtual);
+            int Andar = elevadorView.ChamarElevador();
 
             if (Andar >= 0 & Andar <= elevador.qtdeAndares)
             {
@@ -87,11 +88,12 @@ namespace ProjetoElevador.Controllers
                 {
                     while (elevador.andarAtual < Andar)
                     {
+                        
+
                         elevador.Subir();
-                        this.showMenu("Subindo");
-                                                                       
-                    }
-                   // this.showMenu("Subindo");
+                        this.ShowMenu("Subindo", false);
+                    }  
+                  this.ShowMenu("Parado",false);
 
                 }
 
@@ -100,23 +102,23 @@ namespace ProjetoElevador.Controllers
                     while (elevador.andarAtual > Andar)
                     {
                         elevador.Descer();
-                        this.showMenu("Descendo");
+                        this.ShowMenu("Descendo");
                         
                     }
-                   // this.showMenu("Descendo");
+                   this.ShowMenu("Parado",false);
 
 
                 }
                 
             }
-            else { elevadorView.Chamou(false); this.showMenu("Parado"); }
+            else { elevadorView.Chamou(false); this.ShowMenu("Parado"); }
             this.Entrar();
         }
 
 
         public void Entrar()
         {
-            int qtdePessoas = elevadorView.Entrar(elevador.andarAtual);
+            int qtdePessoas = elevadorView.Entrar();
             if (qtdePessoas>=0 & qtdePessoas <= (elevador.capacidadeMax - elevador.lotacaoAtual))
             {
                 for (int i = 0; i < qtdePessoas; i++)
@@ -136,24 +138,22 @@ namespace ProjetoElevador.Controllers
         public void Sair()
         {
             int qtdePessoas = elevadorView.Sair();
+            
             if (qtdePessoas >= 0 & qtdePessoas <= elevador.lotacaoAtual)
             {
                 for (int i = 0; i < qtdePessoas; i++)
                 {
                     elevador.Sair();
                 }
-                elevadorView.Saiu(true, elevador.lotacaoAtual,qtdePessoas, elevador.andarAtual);
-                this.Menu("Parado");
-            }
-            else 
+                elevador.andarAtual--;
+                elevadorView.Saiu(true, elevador.lotacaoAtual, qtdePessoas);
+            }else 
             {
-                elevadorView.Saiu(false, elevador.lotacaoAtual,0, elevador.andarAtual);
-               this.Menu("");
-
+                elevadorView.Saiu(false, elevador.lotacaoAtual,0);
+                this.ShowMenu("Pausa",false);
             }
 
-           
-            
+
 
         }
 
