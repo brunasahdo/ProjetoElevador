@@ -11,7 +11,7 @@ namespace ProjetoElevador.Models
 
     {        //Propriedades da classe
        public int andarAtual { get; set; } //Pode assumir valores desde o térreo=0 até 
-                                            //último andar
+                                            // o último andar=qtdeAndares
        public int qtdeAndares { get; set; } //desconsiderando o térreo
 
        public int capacidadeMax { get; set; } //quantidade máxima de pessoas permitida no elevador
