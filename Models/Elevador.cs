@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace ProjetoElevador.Models
 {
-    internal class Elevador:IElevador
+    internal class Elevador:IElevador //Classe elevador, que usa a interface IElevador (que contém as infos do projeto).
 
-    {        //Propriedades da classe
+    {
+        //Propriedades da classe
        public int andarAtual { get; set; } //Pode assumir valores desde o térreo=0 até 
                                             // o último andar=qtdeAndares
        public int qtdeAndares { get; set; } //desconsiderando o térreo
@@ -24,7 +25,7 @@ namespace ProjetoElevador.Models
         //Métodos implementados pela interface 
        
       
-        public void Inicializar(int capacidadeMax, int qtdeAndares)
+        public void Inicializar(int capacidadeMax, int qtdeAndares) //define os parâmetros do elevador
         {
                 this.capacidadeMax = capacidadeMax;
                 this.qtdeAndares = qtdeAndares;
@@ -35,7 +36,7 @@ namespace ProjetoElevador.Models
         
         }
 
-        public bool Entrar()
+        public bool Entrar() //aumenta em 1 a lotacaoAtual a menos que a capacidade de pessoas tenha sido atingida.
         {
             if (this.lotacaoAtual < this.capacidadeMax)
             {
@@ -47,7 +48,7 @@ namespace ProjetoElevador.Models
         }
 
 
-        public bool Sair()
+        public bool Sair() //diminui em 1 a lotacaoAtual a menos que não haja nenhuma pessoa o elevador.
         {
             if (this.lotacaoAtual != 0)
             {
@@ -60,7 +61,7 @@ namespace ProjetoElevador.Models
             }
         }
 
-        public bool Subir()
+        public bool Subir() //Sobe um andar (incrementa andarAtual de 1 a menos que ele seja o último).
         { 
             if (this.andarAtual<this.qtdeAndares)
             {
@@ -74,7 +75,7 @@ namespace ProjetoElevador.Models
         }
 
 
-        public bool Descer()
+        public bool Descer() //Desce um andar (diminui o andarAtual de 1 a menos que ele seja o térreo).
         {
             if (this.andarAtual > 0)
             {

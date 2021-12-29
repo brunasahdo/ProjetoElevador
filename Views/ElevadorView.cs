@@ -1,34 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjetoElevador.Views
 {
     internal class ElevadorView
     {
+        //--------------------------------------------------------------------------------------------------------------------------
+        //Métodos de inicialização
+        //--------------------------------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// Retorna um array de tamanho 2 contendo a quantidade de andares do prédio 
         /// e sua capacidade, respectivamente, informadas pelo usuário.
         /// </summary>
         /// <returns></returns>
-        public int[] Inicializar() 
+        public int[] Inicializar()
 
         {
-           
+            Console.Clear();
+
             int[] Configuracao = new int[2];
 
-            Console.WriteLine(@"            ---Configurando o elevador---           ");
+            Console.WriteLine(@"            ---Configurando o elevador---           ");           
             Console.WriteLine("Desconsiderando o térreo, quantos andares há no prédio?");
-            Configuracao[0] = int.Parse(Console.ReadLine());
+            bool valido1=int.TryParse(Console.ReadLine(), out Configuracao[0]);
             Console.WriteLine("\nQual é o número máximo de pessoas (capacidade) que o elevador suporta?");
-            Configuracao[1] = int.Parse(Console.ReadLine());
+            bool valido2 = int.TryParse(Console.ReadLine(),out Configuracao[1]);
+    
 
-            return Configuracao;
+            if (valido1 & valido2)
+                return Configuracao;
+            else  return new int[] { -1,-1};
         }
-        //--------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------
 
         public void Inicializou(bool simOuNao)
         {
@@ -36,36 +38,28 @@ namespace ProjetoElevador.Views
             {
                 Console.WriteLine("\nElevador inicializado com sucesso." +
                     "\nO elevador está vazio. Quem quiser entrar precisa chamar o elevador até o seu andar.\n");
+                Console.WriteLine("\nPressione ENTER para continuar");
+               
+
+
             }
             else
             {
-                Console.WriteLine("\nOs valores informados não são válidos.\n\n");
+                Console.WriteLine("\nOs valores informados não são válidos. Pressione ENTER para tentar novamente\n\n");
+                            
             }
-            Console.WriteLine("\nPressione Enter para continuar");
             Console.ReadLine();
+            
+           
         }
         //--------------------------------------------------------------------------------------------------------------------------
+        //Métodos da tela princial
         //--------------------------------------------------------------------------------------------------------------------------
 
-        public void Informacoes(int lotacaoAtual, int capacidadeMax, int qtdeAndares, bool?[] paradas)
-        {
-            Console.WriteLine($@"                                                       Quantidade de pessoas no elevador: {lotacaoAtual}
-                                                       Capacidade Máxima: {capacidadeMax} pessoas
-                                                       Último Andar: {qtdeAndares}");
-
-            Console.WriteLine($@"                                                       Andares Chamados");
-            for (int i = 0; i < paradas.Length; i++)
-            {
-                if (paradas[i] != null)
-                    Console.WriteLine($@"                                                             {i}");
-            }
-            Console.WriteLine("");
-        }
-
-        //--------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------
         public void Visor(int andarAtual, string subindoOuDescendo)
         {
+            Console.Clear();     //Limpa o Console, deixando apenas as informações do andar atual
+
             string andarAtualstring = Convert.ToString(andarAtual);
 
             if (andarAtualstring == "0")
@@ -75,115 +69,84 @@ namespace ProjetoElevador.Views
 
             Console.WriteLine($"\nAndar atual: {andarAtualstring} - {subindoOuDescendo}");
         }
+        public void Informacoes(int lotacaoAtual, int capacidadeMax, int qtdeAndares, bool?[] paradas)
+        {
+            Console.WriteLine($@"                                                       Quantidade de pessoas no elevador: {lotacaoAtual}
+                                                       Capacidade Máxima: {capacidadeMax} pessoas
+                                                       Último Andar: {qtdeAndares}");
 
-        //--------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------
+           
 
+                Console.WriteLine($@"                                                       Andares Chamados");
+
+                for (int i = 0; i < paradas.Length; i++)
+
+                {
+                    if (paradas[i] != null)
+                        Console.WriteLine($@"                                                             {i}");
+                }
+                Console.WriteLine("");
+            
+             
+        }
         public string Menu()
         {
-            Console.WriteLine("\n\n" + @"Escolha uma das ações:
+            Console.WriteLine("\n\n" + @"A qualquer momento pressione ENTER para continuar sem fazer nenhuma ação.
 
-Enter - Continuar;
+Ou escolha:
 1 - Alguém chamou o elevador;
-2 - Selecionar um novo andar;
+2 - Selecionar um novo andar no painel;
 3 - Alguém deseja sair neste andar;
-4 - Encerrar o aplicativo.
+4 - Reconfigurar elevador;
+5 - Encerrar o aplicativo.
 ");
             return Console.ReadLine();
         }
 
+
         //--------------------------------------------------------------------------------------------------------------------------
+        // Métodos de Chamada
         //--------------------------------------------------------------------------------------------------------------------------
-        public int ChamarElevador()
+        
+        //Chamada externa
+        public string ChamarElevador()
         {
-           
+
             Console.WriteLine("\n             ---Chamar o elevador---           ");
-            Console.WriteLine("Em que andar o elevador foi chamado? (0 - térreo)");
-            bool inteiro = int.TryParse(Console.ReadLine(), out int qualAndar);
-            
-                return qualAndar;         
-       
+            Console.WriteLine("Em que andar o elevador foi chamado? (ENTER - desistir da ação)");
+            string qualAndar = Console.ReadLine();
+            return qualAndar;
+
         }
-        public void Chamou(bool simOuNao) 
+
+
+        //Confirmação
+        public void Chamou(bool simOuNao)
         {
             if (simOuNao)
             {
                 Console.WriteLine($"\nO elevador está a caminho.");
+                Console.ReadLine();
+
             }
             else Console.WriteLine("\n Andar inválido");
-            Console.ReadLine();
         }
 
-
-        //--------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------
-
-
-        public int Entrar()
+        //Chamada interna
+        public string PainelElevador(int lotacaoAtual, int capacidadeMax, int qtdeAndares, bool?[] paradas)
         {
-            Console.WriteLine($"\nQuantas pessoas desejam entrar? (Enter - ninguém)");
-            string andarEntrada = Console.ReadLine();
-            if (int.TryParse(andarEntrada, out int result))
-            { return result; }
-
-            else if (andarEntrada == "")
-
-            { return 0; }
-
-            else return -1;
-        }
-        public void Entrou(bool simOuNao, int lotacaoAtual, int capacidadeMax, int quantosEntraram)
-        { if (simOuNao)
-            { Console.WriteLine($"\n{quantosEntraram} pessoas entraram. Quantidade de pessoas no elevador: " + lotacaoAtual); }
-            else
-            { Console.WriteLine($@"
-O elevador não suporta a entrada dessa quantidade de pessoas ou o número informado é inválido.
-Tente entrar com uma quantidade que não ultrapasse o limite de {capacidadeMax} pessoas ou esperar outro momento.
-"); }
-        }
-        //--------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------
-
-        public int Sair()
-        {
-            Console.WriteLine("\nQuantas pessoas desejam sair? (Enter - ninguém)");
-            string andarSaida = Console.ReadLine();
-            if (int.TryParse(andarSaida, out int result))
-            { return result; }
-            else if (andarSaida == "")
-            {return 0;} 
-            else return -1;
-        }
-        public void Saiu(bool simOuNao, int lotacaoAtual, int quantosSairam)
-        {
-
-            if (simOuNao)
-            { 
-                Console.WriteLine($"\n{quantosSairam} pessoas saíram. Quantidade de pessoas no elevador: " + lotacaoAtual);
-                Console.ReadLine();
-            }
-            else
-            { Console.WriteLine($"\nPedido inválido. Quantidade de pessoas no elevador:{lotacaoAtual}.");}
-
-           
-
-        }
-
-
-        //--------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------
-
-        public string PainelElevador() 
-        {
-            Console.WriteLine("\n\n"+@"           ---Painel interno do elevador---            ");       
-
-            Console.WriteLine("\n"+@"Qual andar deseja selecionar no painel? 
-(pressione Enter caso não queira selecionar)");
+            Console.Clear();
+            Console.WriteLine("\n\n" + @"           ---Painel interno do elevador---            ");
+            this.Informacoes(lotacaoAtual, capacidadeMax, qtdeAndares, paradas);
+            Console.WriteLine("\nSelecione um andar ou pressione ENTER para sair do painel");
             string saida = Console.ReadLine();
+            Console.Clear();
             return saida;
 
         }
 
+
+        //Confirmação
         /// <summary>
         /// retorna true se o usuário quer selecionar mais andares no painel.
         /// retorna false para terminar a seleção.
@@ -191,20 +154,82 @@ Tente entrar com uma quantidade que não ultrapasse o limite de {capacidadeMax} 
         /// <param name="simOuNao"></param>
         public void AndarSelecionado(bool simOuNao)
         {
+            Console.WriteLine("\n\n" + @"           ---Painel interno do elevador---            ");
             if (simOuNao)
             {
                 Console.WriteLine("\n" + @"Andar selecionado com sucesso.");
+
+
             }
             else { Console.WriteLine(@"Andar inválido"); }
+
+
         }
 
-        public string SelecionarOutro()
-        {            
-            Console.WriteLine("\n" + @"Que outro andar deseja selecionar? (Enter - Sair do painel)");
+
+        //Continuar fazendo chamadas internas. A confirmação é feita pelo método acima.
+        public string SelecionarOutro(int lotacaoAtual, int capacidadeMax, int qtdeAndares, bool?[] paradas)
+        {
+
+            this.Informacoes(lotacaoAtual, capacidadeMax, qtdeAndares, paradas);
+            Console.WriteLine("\n" + @"Selecione outro andar ou pressione ENTER para sair do painel");
             string saida = Console.ReadLine();
+            Console.Clear();
             return saida;
+        }
+
+
+        //--------------------------------------------------------------------------------------------------------------------------
+        // Métodos de fluxo de pessoas no elevador e suas confirmações
+        //--------------------------------------------------------------------------------------------------------------------------
+
+
+        public string Entrar()
+        {
+            Console.WriteLine($"\nQuantas pessoas desejam entrar? (ENTER - ninguém)");
+            string andarEntrada = Console.ReadLine();
+            return andarEntrada;
+        }
+        public void Entrou(bool simOuNao, int lotacaoAtual, int capacidadeMax, int quantosEntraram)
+        {
+            if (quantosEntraram != 0&simOuNao)
+            {            
+                Console.WriteLine($"\n{quantosEntraram} pessoas entraram. Quantidade de pessoas no elevador: " + lotacaoAtual + ". (ENTER - continuar)");
+              
+                Console.ReadLine();
+                
+                                       
+            }
+            Console.WriteLine($@"
+O elevador não suporta a entrada dessa quantidade de pessoas ou o número informado é inválido.
+Tente entrar com uma quantidade que não ultrapasse o limite de {capacidadeMax} pessoas ou esperar outro momento.
+");
+
 
         }
+        public string Sair()
+        {
+            Console.WriteLine("\nQuantas pessoas desejam sair? (ENTER - ninguém)");
+            string andarSaida = Console.ReadLine();
+            return andarSaida;
+        }
+        public void Saiu(bool simOuNao, int lotacaoAtual, int quantosSairam)
+        {
+
+            if (simOuNao&quantosSairam!=0)
+            { 
+                Console.WriteLine($"\n{quantosSairam} pessoas saíram. Quantidade de pessoas no elevador: " + lotacaoAtual+ ". (ENTER - continuar)");
+                Console.ReadLine();
+
+            }
+            else
+            { Console.WriteLine($"\nPedido inválido. Quantidade de pessoas no elevador:{lotacaoAtual}.");}
+                       
+
+        }
+
+
+     
 
 
         //--------------------------------------------------------------------------------------------------------------------------
