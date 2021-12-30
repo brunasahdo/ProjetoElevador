@@ -61,7 +61,7 @@ namespace ProjetoElevador.Controllers
             }
         }
 
-        //Método Principal do Controller
+        //Método Principal da Controller
         public void Ativar()
         { 	   
             
@@ -304,7 +304,7 @@ namespace ProjetoElevador.Controllers
                 elevadorView.Informacoes(elevador.lotacaoAtual, elevador.capacidadeMax, elevador.qtdeAndares, paradas);
             }
 
-            else     /	/input inválido
+            else     //input inválido
             {
                 elevadorView.Entrou(false, elevador.lotacaoAtual, elevador.capacidadeMax, 0);  //Informa que a entrada não foi possível e a capacidade máxima.
 
