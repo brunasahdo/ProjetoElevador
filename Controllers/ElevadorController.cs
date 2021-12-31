@@ -61,7 +61,8 @@ namespace ProjetoElevador.Controllers
             }
         }
 
-        //Método Principal do Controller
+
+        //Método Principal da Controller
         string ultimoStatus = "Descendo";//o elevador precisa lembrar de qual foi a sua última direção de movimento antes de parar
                                          //para poder continuar nessa direção. Caso não haja uma, estamos configurando o default como
                                          //"Descendo". Se vários andares forem selecionados no painel em um momento em que o elevador
@@ -69,6 +70,7 @@ namespace ProjetoElevador.Controllers
                                          //menores. Isso não deve acontecer no programa, pois o único momento em que isso ocorre é
                                          //no início do programa, quando ele está no térreo, não sendo
                                          //possível escolher andares menores no painel. Porém, o default é necessário.
+
         public void Ativar()
         { 	   
             
