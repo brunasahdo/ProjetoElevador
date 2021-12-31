@@ -62,6 +62,13 @@ namespace ProjetoElevador.Controllers
         }
 
         //Método Principal do Controller
+        string ultimoStatus = "Descendo";//o elevador precisa lembrar de qual foi a sua última direção de movimento antes de parar
+                                         //para poder continuar nessa direção. Caso não haja uma, estamos configurando o default como
+                                         //"Descendo". Se vários andares forem selecionados no painel em um momento em que o elevador
+                                         //estiver parado e não tiver acesso à sua última direção, ele vai primeiro para os andares
+                                         //menores. Isso não deve acontecer no programa, pois o único momento em que isso ocorre é
+                                         //no início do programa, quando ele está no térreo, não sendo
+                                         //possível escolher andares menores no painel. Porém, o default é necessário.
         public void Ativar()
         { 	   
             
@@ -76,6 +83,8 @@ namespace ProjetoElevador.Controllers
             /*mesma ideia do subarray, mas para os andares menores. 
              * Usamos os arrays para identificar a proxima direção no switch a seguir:*/
 
+           
+
             switch (status) //Responsável por definir a ação do elevador e/ou sua mudança de status.
 
             {
@@ -86,7 +95,11 @@ namespace ProjetoElevador.Controllers
 													 //um elemento diferente de null no array andaresMaiores". 
                     { elevador.Subir(); }
 
-                    else { status = "Parado"; }  //quando o elevador chega ao último andar, não dá mais para subir.
+                    else 
+                    { 
+                        ultimoStatus = status;
+                        status = "Parado";
+                    }  //quando o elevador chega ao último andar, não dá mais para subir.
                     break; 
 
 
@@ -95,24 +108,26 @@ namespace ProjetoElevador.Controllers
 
                     if (elevador.andarAtual > 0 & !andaresMenores.All(i => i == null))
                     { elevador.Descer(); }
-                    else { status = "Parado"; } //quando o elevador chega ao térreo não dá mais para descer.
+                    else
+                    { ultimoStatus = status; 
+                        status = "Parado";
+                    } //quando o elevador chega ao térreo não dá mais para descer.
                     break;       
 
 
 
                 case "Parado":/*Neste programa, o status do elevador só é "Parado" quando não há mais paradas na
                               direção em que está indo. Então se estiver subindo, é hora de descer. Se estiver
-                              descendo, é hora de subir. Se não há nenhuma outra parada, ele continua parado.
-                              (Obs: ainda que coloquemos na View às vezes que o elevador está "Parado" quando alguém entra ou sai,
-
-                              a variável status pode não ter o valor "Parado").*/
+                              descendo, é hora de subir. Se não há nenhuma outra parada, ele continua parado. Pode acontecer
+                              de o elevado estar parado há algum tempo e vários andares serem selecionados no painel. Nesse
+                              caso ele deve priorizar a última direção em que se movimentou (ultimoStatus).*/
 
 
                     if (paradas[elevador.andarAtual] != null) { } //se existe uma parada no andar atual, não fazemos nada aqui. Assim,	
-								  //quando o método this.Continuar() for chamado depois deste switch,
-								  //o elevador abrirá neste andar.	
-							          	
-                    else if (andaresMaiores.All(i => i == null) & !andaresMenores.All(i => i == null)) 
+                                                                  //quando o método this.Continuar() for chamado depois deste switch,
+                                                                  //o elevador abrirá neste andar.	
+
+                    else if (andaresMaiores.All(i => i == null) & !andaresMenores.All(i => i == null))
                     {
                         status = "Descendo"; //se todos os andares maiores que o atual não foram chamados
                                              //enquanto pelo menos um menor que o atual foi chamado, o elevador desce.
@@ -120,9 +135,15 @@ namespace ProjetoElevador.Controllers
                     else if (andaresMenores.All(i => i == null) & !andaresMaiores.All(i => i == null))
                     {
                         status = "Subindo";  //Similarmente, o elevador sobe se não precisar mais descer quando existem
-				             //chamadas em andares superiores.
+                                             //chamadas em andares superiores.
                     }
-                    else status = "Parado"; //se não há chamadas em nenhum andar, o elevador para.
+                    else if (!andaresMenores.All(i => i == null) & !andaresMaiores.All(i => i == null))//
+                    { 
+                        status = ultimoStatus;//Se o elevador está parado, mas existem chamadas acima e abaixo dele, ele
+                                              //escolherá seguir na última direção em que se movimentou.
+                    }
+                    else { status = "Parado"; }
+                     //se não há chamadas em nenhum andar, o elevador para.
 
                     break;
 
@@ -304,7 +325,7 @@ namespace ProjetoElevador.Controllers
                 elevadorView.Informacoes(elevador.lotacaoAtual, elevador.capacidadeMax, elevador.qtdeAndares, paradas);
             }
 
-            else     /	/input inválido
+            else     //input inválido
             {
                 elevadorView.Entrou(false, elevador.lotacaoAtual, elevador.capacidadeMax, 0);  //Informa que a entrada não foi possível e a capacidade máxima.
 

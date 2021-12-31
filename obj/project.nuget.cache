@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GAwCvSyeIg2WZlQk3TXevAHu3hr3KeAUvqxrwjKqPIFUHKEljp5AZelorv1VclQl0wUvVl46IPkby09lL4dyow==",
+  "dgSpecHash": "cuDIC/M1zN05miEQcnFMaE2X5Yt/CoLEPOOMrl053IIwhB1pDxJ4Kuk0vyW5XEVwqUr5Rho8OM3dIt9o1aTX/g==",
   "success": true,
   "projectFilePath": "C:\\Users\\Bruna Larissa\\source\\repos\\ProjetoElevador\\ProjetoElevador\\ProjetoElevador.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Bruna Larissa\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

@@ -38,7 +38,7 @@ namespace ProjetoElevador.Views
             {
                 Console.WriteLine("\nElevador inicializado com sucesso." +
                     "\nO elevador está vazio. Quem quiser entrar precisa chamar o elevador até o seu andar.\n");
-                Console.WriteLine("\nPressione ENTER para continuar");
+                Console.WriteLine("\n Pressione ENTER para continuar");
                
 
 
@@ -67,12 +67,12 @@ namespace ProjetoElevador.Views
                 andarAtualstring = "térreo";
             }
 
-            Console.WriteLine($"\nAndar atual: {andarAtualstring} - {subindoOuDescendo}");
+            Console.WriteLine($"\n Andar atual: {andarAtualstring} - {subindoOuDescendo}");
         }
         public void Informacoes(int lotacaoAtual, int capacidadeMax, int qtdeAndares, bool?[] paradas)
         {
             Console.WriteLine($@"                                                       Quantidade de pessoas no elevador: {lotacaoAtual}
-                                                       Capacidade Máxima: {capacidadeMax} pessoas
+                                                       Capacidade: {capacidadeMax} pessoas
                                                        Último Andar: {qtdeAndares}");
 
            
@@ -91,14 +91,14 @@ namespace ProjetoElevador.Views
         }
         public string Menu()
         {
-            Console.WriteLine("\n\n" + @"A qualquer momento pressione ENTER para continuar sem fazer nenhuma ação.
+            Console.WriteLine("\n\n" + @" A qualquer momento pressione ENTER para continuar sem fazer nenhuma ação,
+ ou escolha uma das opções:
 
-Ou escolha:
-1 - Alguém chamou o elevador;
-2 - Selecionar um novo andar no painel;
-3 - Alguém deseja sair neste andar;
-4 - Reconfigurar elevador;
-5 - Encerrar o aplicativo.
+    1 - Alguém chamou o elevador;
+    2 - Selecionar um novo andar no painel;
+    3 - Alguém deseja sair neste andar;
+    4 - Reconfigurar elevador;
+    5 - Encerrar o aplicativo.
 ");
             return Console.ReadLine();
         }
@@ -125,7 +125,7 @@ Ou escolha:
         {
             if (simOuNao)
             {
-                Console.WriteLine($"\nO elevador está a caminho.");
+                Console.WriteLine($"\nO elevador está a caminho. (ENTER - continuar)");
                 Console.ReadLine();
 
             }
@@ -172,7 +172,7 @@ Ou escolha:
         {
 
             this.Informacoes(lotacaoAtual, capacidadeMax, qtdeAndares, paradas);
-            Console.WriteLine("\n" + @"Selecione outro andar ou pressione ENTER para sair do painel");
+            Console.WriteLine("\nSelecione outro andar ou pressione ENTER para sair do painel");
             string saida = Console.ReadLine();
             Console.Clear();
             return saida;
