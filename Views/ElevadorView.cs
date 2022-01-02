@@ -19,8 +19,10 @@ namespace ProjetoElevador.Views
             Console.Clear();
 
             int[] Configuracao = new int[2];
-
-            Console.WriteLine(@"            ---Configurando o elevador---           ");           
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(@"            ---Configurando o elevador---                ");
+            Console.ResetColor();
             Console.WriteLine("Desconsiderando o térreo, quantos andares há no prédio?");
             bool valido1=int.TryParse(Console.ReadLine(), out Configuracao[0]);
             Console.WriteLine("\nQual é o número máximo de pessoas (capacidade) que o elevador suporta?");
@@ -38,15 +40,19 @@ namespace ProjetoElevador.Views
             {
                 Console.WriteLine("\nElevador inicializado com sucesso." +
                     "\nO elevador está vazio. Quem quiser entrar precisa chamar o elevador até o seu andar.\n");
-                Console.WriteLine("\n Pressione ENTER para continuar");
+                Console.WriteLine("\nPressione ENTER para continuar");
                
 
 
             }
             else
             {
+
+
+                Console.ForegroundColor = ConsoleColor.Red;
+
                 Console.WriteLine("\nOs valores informados não são válidos. Pressione ENTER para tentar novamente\n\n");
-                            
+                Console.ResetColor();
             }
             Console.ReadLine();
             
@@ -59,7 +65,7 @@ namespace ProjetoElevador.Views
         public void Visor(int andarAtual, string subindoOuDescendo)
         {
             Console.Clear();     //Limpa o Console, deixando apenas as informações do andar atual
-
+            Console.WriteLine("");
             string andarAtualstring = Convert.ToString(andarAtual);
 
             if (andarAtualstring == "0")
@@ -67,7 +73,14 @@ namespace ProjetoElevador.Views
                 andarAtualstring = "térreo";
             }
 
-            Console.WriteLine($"\n Andar atual: {andarAtualstring} - {subindoOuDescendo}");
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor. White;
+            
+            Console.WriteLine(@$"
+  Andar atual: {andarAtualstring} - {subindoOuDescendo} 
+
+");
+            Console.ResetColor();
         }
         public void Informacoes(int lotacaoAtual, int capacidadeMax, int qtdeAndares, bool?[] paradas)
         {
@@ -112,7 +125,10 @@ namespace ProjetoElevador.Views
         public string ChamarElevador()
         {
 
-            Console.WriteLine("\n             ---Chamar o elevador---           ");
+
+            Console.WriteLine("               ---Chamar o elevador---                  ");
+
+
             Console.WriteLine("Em que andar o elevador foi chamado? (ENTER - desistir da ação)");
             string qualAndar = Console.ReadLine();
             return qualAndar;
@@ -129,14 +145,28 @@ namespace ProjetoElevador.Views
                 Console.ReadLine();
 
             }
-            else Console.WriteLine("\n Andar inválido");
+            else
+            {
+               
+
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" Andar inválido ");
+                Console.ResetColor();
+    
+
+            }
         }
 
         //Chamada interna
         public string PainelElevador(int lotacaoAtual, int capacidadeMax, int qtdeAndares, bool?[] paradas)
         {
             Console.Clear();
-            Console.WriteLine("\n\n" + @"           ---Painel interno do elevador---            ");
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n\n" + @"           ---Painel interno do elevador---                 ");
+            Console.ResetColor();
+            Console.WriteLine("");
             this.Informacoes(lotacaoAtual, capacidadeMax, qtdeAndares, paradas);
             Console.WriteLine("\nSelecione um andar ou pressione ENTER para sair do painel");
             string saida = Console.ReadLine();
@@ -154,14 +184,24 @@ namespace ProjetoElevador.Views
         /// <param name="simOuNao"></param>
         public void AndarSelecionado(bool simOuNao)
         {
-            Console.WriteLine("\n\n" + @"           ---Painel interno do elevador---            ");
+
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n\n" + @"           ---Painel interno do elevador---                    ");
+            Console.ResetColor();
             if (simOuNao)
             {
                 Console.WriteLine("\n" + @"Andar selecionado com sucesso.");
 
 
             }
-            else { Console.WriteLine(@"Andar inválido"); }
+            else 
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(@"Andar inválido"); 
+                Console.ResetColor();
+            }
 
 
         }
@@ -192,18 +232,24 @@ namespace ProjetoElevador.Views
         }
         public void Entrou(bool simOuNao, int lotacaoAtual, int capacidadeMax, int quantosEntraram)
         {
-            if (quantosEntraram != 0&simOuNao)
-            {            
-                Console.WriteLine($"\n{quantosEntraram} pessoas entraram. Quantidade de pessoas no elevador: " + lotacaoAtual + ". (ENTER - continuar)");
-              
+            if (quantosEntraram != 0 & simOuNao)
+            {
+                Console.WriteLine($"\n{quantosEntraram} pessoas entraram. Quantidade de pessoas no elevador: " + lotacaoAtual + ". (ENTER - prosseguir para o painel)");
+
                 Console.ReadLine();
-                
-                                       
+
+
             }
-            Console.WriteLine($@"
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine($@"
 O elevador não suporta a entrada dessa quantidade de pessoas ou o número informado é inválido.
 Tente entrar com uma quantidade que não ultrapasse o limite de {capacidadeMax} pessoas ou esperar outro momento.
 ");
+                Console.ResetColor();
+            }
 
 
         }
@@ -223,7 +269,11 @@ Tente entrar com uma quantidade que não ultrapasse o limite de {capacidadeMax} 
 
             }
             else
-            { Console.WriteLine($"\nPedido inválido. Quantidade de pessoas no elevador:{lotacaoAtual}.");}
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\nPedido inválido. Quantidade de pessoas no elevador:{lotacaoAtual}.");
+                Console.ResetColor();
+            }
                        
 
         }
