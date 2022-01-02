@@ -53,7 +53,7 @@ namespace ProjetoElevador.Views
            
         }
         //--------------------------------------------------------------------------------------------------------------------------
-        //Métodos da tela princial
+        //Métodos da tela principal
         //--------------------------------------------------------------------------------------------------------------------------
 
         public void Visor(int andarAtual, string subindoOuDescendo)

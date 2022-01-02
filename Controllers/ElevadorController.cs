@@ -25,14 +25,15 @@ namespace ProjetoElevador.Controllers
         (no Painel do elevador) para sair nos andares 3 e 4.
         */
 
-        
-        string status = "Parado";//status será uma variável que poderá assumir os valores "Subindo", "Descendo" ou "Parado". 
+
+        string status;//status será uma variável que poderá assumir os valores "Subindo", "Descendo" ou "Parado". 
 
 
         public void Inicializar()
         {
-            //Pedindo as informações do elevador na View e colocando no objeto elevador criado.
+            status = "Parado";//status inicial do elevador
 
+            //Pedindo as informações do elevador na View e colocando no objeto elevador criado.
             int[] config = elevadorView.Inicializar();         //Olhar documentação do método elevadorView.Inicializar().
             int configQtdeAndares = config[0];
             int configCapacidade = config[1];
@@ -62,7 +63,6 @@ namespace ProjetoElevador.Controllers
         }
 
 
-        //Método Principal da Controller
         string ultimoStatus = "Descendo";//o elevador precisa lembrar de qual foi a sua última direção de movimento antes de parar
                                          //para poder continuar nessa direção. Caso não haja uma, estamos configurando o default como
                                          //"Descendo". Se vários andares forem selecionados no painel em um momento em que o elevador
@@ -70,6 +70,9 @@ namespace ProjetoElevador.Controllers
                                          //menores. Isso não deve acontecer no programa, pois o único momento em que isso ocorre é
                                          //no início do programa, quando ele está no térreo, não sendo
                                          //possível escolher andares menores no painel. Porém, o default é necessário.
+
+
+        //Método Principal da Controller
 
         public void Ativar()
         { 	   

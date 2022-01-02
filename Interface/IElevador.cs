@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoElevador.Interface
 {
-    internal interface IElevador
+    internal interface IElevador //Interface de acordo com a página do projeto.
     {     
         void Inicializar(int capacidadeMax, int qtdeAndares);
         // ***Inicializar*** : deve receber como parâmetros a capacidade do elevador 
